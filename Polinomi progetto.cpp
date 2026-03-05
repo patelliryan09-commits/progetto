@@ -5,15 +5,15 @@ using namespace std;
 int main() {
     cout << "Avvio del progetto polinomi" << endl;
 
-    int p1[4] = {0, 0, 0, 0};
-    int p2[4] = {0, 0, 0, 0};
+    int p1[4] = {0, 0, 0, 0}; //primo polinomio
+    int p2[4] = {0, 0, 0, 0}; //secondo polinomio
     
-    int somma[4] = {0, 0, 0, 0};
-    int diff[4] = {0, 0, 0, 0};
-    int prod[7] = {0, 0, 0, 0, 0, 0, 0};
+    int somma[4] = {0, 0, 0, 0}; //array per la somma
+    int diff[4] = {0, 0, 0, 0}; //array per la differenza
+    int prod[7] = {0, 0, 0, 0, 0, 0, 0}; //array per il prodotto
 
-    int g1;
-    int g2;
+    int g1; //grado massimo del primo polinomio
+    int g2; //grado massimo del secondo polinomio
 
     cout << "\nGrado del primo polinomio: ";
     cin >> g1;
@@ -82,3 +82,4 @@ int main() {
 
     return 0;
 }
+
