@@ -15,6 +15,8 @@ int prod[7] = {0, 0, 0, 0, 0, 0, 0};
 int g1;
 int g2;
 
+  system("CLS");
+
 cout << "\n--- INSERIMENTO PRIMO POLINOMIO ---" << endl;
 cout << "Grado del primo polinomio: ";
 cin >> g1;
@@ -28,6 +30,8 @@ cout << "Immetti il coefficiente di x^" << i << ": ";
 cin >> p1[i];
 }
 
+  system("CLS");
+  
 cout << "\n--- INSERIMENTO SECONDO POLINOMIO ---" << endl;
 cout << "Grado del secondo polinomio: ";
 cin >> g2;
@@ -100,6 +104,7 @@ cout << endl;
 
 return 0;
 }
+
 
 
 
