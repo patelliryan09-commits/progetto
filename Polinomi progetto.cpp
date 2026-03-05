@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-cout << "Avvio del progetto polinomi" << endl;
+cout << "PROGETTO POLINOMI" << endl;
 
 int p1[4] = {0, 0, 0, 0};
 int p2[4] = {0, 0, 0, 0};
@@ -14,10 +14,19 @@ int prod[7] = {0, 0, 0, 0, 0, 0, 0};
 
 int g1;
 int g2;
+char carattere;
 
-  system("CLS");
+	
+	cout<<endl;
+	cout<<"per entrare nel nostro magnifico progetto premere un qualsiasi tasto... ";
+	cin>>carattere;
+	if(isalnum(carattere))
+	{
+		system("CLS");
+	}
 
 cout << "\n--- INSERIMENTO PRIMO POLINOMIO ---" << endl;
+cout<<endl;
 cout << "Grado del primo polinomio: ";
 cin >> g1;
 
@@ -29,6 +38,8 @@ cout << "Immetti il coefficiente di x^" << i << ": ";
 }
 cin >> p1[i];
 }
+
+
 
   system("CLS");
   
@@ -44,6 +55,8 @@ cout << "Immetti il coefficiente di x^" << i << ": ";
 }
 cin >> p2[i];
 }
+
+system("CLS");
 
 for (int i = 0; i < 4; i++) {
 somma[i] = p1[i] + p2[i];
@@ -104,6 +117,7 @@ cout << endl;
 
 return 0;
 }
+
 
 
 
