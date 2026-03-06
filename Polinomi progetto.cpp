@@ -7,13 +7,16 @@ int main() {
     int p1[4], p2[4], somma[4], diff[4], prod[7];
     int g1, g2, scelta;
 
+    
     system("cls");
     cout << " ................................................." << endl;
     cout << " :                                               :" << endl;
     cout << " :        IL NOSTRO PROGETTO POLINOMI !!!        :" << endl;
     cout << " :                                               :" << endl;
     cout << " :...............................................:" << endl;
-    cout << "\n  [>] Digita un numero per ACCEDERE al sistema: ";
+    cout << "\n  [ SISTEMA IN FASE DI AVVIO... ]" << endl;
+    cout << "  [ GRADO MASSIMO RILEVATO: 3   ]" << endl;
+    cout << "\n  Premi un numero per ENTRARE: ";
     cin >> scelta;
 
     inserimento:
@@ -21,12 +24,13 @@ int main() {
     for(int i=0; i<4; i++) { p1[i]=0; p2[i]=0; somma[i]=0; diff[i]=0; }
     for(int i=0; i<7; i++) { prod[i]=0; }
 
+    
     system("cls");
     cout << "  _______________________________________________" << endl;
     cout << " |                                               |" << endl;
     cout << " |   ===> STEP 1: CONFIGURA POLINOMIO [A] <===   |" << endl;
     cout << " |_______________________________________________|" << endl;
-    cout << "\n  Inserisci il grado (max 3): ";
+    cout << "\n  Inserisci il grado: ";
     cin >> g1;
 
     for (int i = g1; i >= 0; i--) {
@@ -35,12 +39,13 @@ int main() {
         cin >> p1[i];
     }
 
+    
     system("cls");
     cout << "  _______________________________________________" << endl;
     cout << " |                                               |" << endl;
     cout << " |   ===> STEP 2: CONFIGURA POLINOMIO [B] <===   |" << endl;
     cout << " |_______________________________________________|" << endl;
-    cout << "\n  Inserisci il grado (max 3): ";
+    cout << "\n  Inserisci il grado: ";
     cin >> g2;
 
     for (int i = g2; i >= 0; i--) {
@@ -49,6 +54,7 @@ int main() {
         cin >> p2[i];
     }
 
+    
     for (int i = 0; i < 4; i++) {
         somma[i] = p1[i] + p2[i];
         diff[i] = p1[i] - p2[i];
@@ -59,6 +65,16 @@ int main() {
         }
     }
 
+    
+    system("cls");
+    cout << "\n\n          /----------------------------\\" << endl;
+    cout << "          |      A TE LA SCELTA...     |" << endl;
+    cout << "          \\----------------------------/" << endl;
+    cout << "\n          Analisi dei dati completata." << endl;
+    cout << "          Premi un numero per visualizzare il menu: ";
+    cin >> scelta;
+
+   
     do {
         system("cls");
         cout << "  ===============================================" << endl;
@@ -75,7 +91,7 @@ int main() {
 
         system("cls");
         if (scelta == 1) {
-            cout << "  [!] RISULTATO ADDIZIONE: Polinomio 1 + Polinomio 2" << endl;
+            cout << "  [!] RISULTATO: POLINOMIO 1 + POLINOMIO 2" << endl;
             cout << "  --------------------------------------------------" << endl;
             cout << "  P(s) = ";
             for (int i = 3; i >= 0; i--) {
@@ -89,7 +105,7 @@ int main() {
             int pausa; cin >> pausa;
         } 
         else if (scelta == 2) {
-            cout << "  [!] RISULTATO SOTTRAZIONE: Polinomio 1 - Polinomio 2" << endl;
+            cout << "  [!] RISULTATO: POLINOMIO 1 - POLINOMIO 2" << endl;
             cout << "  ----------------------------------------------------" << endl;
             cout << "  P(d) = ";
             for (int i = 3; i >= 0; i--) {
@@ -103,7 +119,7 @@ int main() {
             int pausa; cin >> pausa;
         } 
         else if (scelta == 3) {
-            cout << "  [!] RISULTATO PRODOTTO: Polinomio 1 * Polinomio 2" << endl;
+            cout << "  [!] RISULTATO: POLINOMIO 1 * POLINOMIO 2" << endl;
             cout << "  -------------------------------------------------" << endl;
             cout << "  P(m) = ";
             for (int i = g1 + g2; i >= 0; i--) {
@@ -122,7 +138,7 @@ int main() {
             cout << "  |    RESET SISTEMA: TORNO ALL'INIZIO...       |" << endl;
             cout << "  |                                             |" << endl;
             cout << "  |||||||||||||||||||||||||||||||||||||||||||||||" << endl;
-            cout << "\n  Attendere... Premi un numero per confermare: ";
+            cout << "\n  Premi un numero per confermare il reset: ";
             int pausa; cin >> pausa;
             goto inserimento;
         }
@@ -130,9 +146,3 @@ int main() {
 
     return 0;
 }
-
-
-
-
-
-
