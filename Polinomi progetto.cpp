@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cmath> 
 #include <iomanip>
+#include<cctype>
 #include "graphics2.h" 
 
 /* =============================================================
@@ -45,7 +46,7 @@ int main() {
     cout << "          |                                                       |" << endl;
     cout << "          |    _______________________________________________    |" << endl;
     cout << "          |   |                                               |   |" << endl;
-    cout << "          |   |   Premi un tasto per avviare il programma...   |   |" << endl;
+    cout << "          |   |   Premi un tasto per avviare il programma...  |   |" << endl;
     cout << "          |   |_______________________________________________|   |" << endl;
     cout << "          |                                                       |" << endl;
     cout << "          |_______________________________________________________|" << endl;
@@ -70,14 +71,25 @@ int main() {
     cout << "\n  Inserisci il grado del primo polinomio (massimo 3): ";
     cin >> g1;
     
-    while(g1 > 3) {
+    while(g1 > 3 ) {
         cout << "  [!] Errore: il grado massimo supportato e' 3: ";
         cin >> g1;
     }
+    while(isalpha(g1))
+    {
+    	cout << "  [!] Errore: il programma registra solo numeri: ";
+        cin >> g1;	
+	}
 
     for (int i = g1; i >= 0; i--) {
-        if (i == 0) cout << "  [?] Immetti il TERMINE NOTO: ";
-        else cout << "  [?] Immetti il coefficiente di x^" << i << ": ";
+        if (i == 0) 
+		{
+			cout << "  [?] Immetti il TERMINE NOTO: ";
+		}
+        else 
+		{
+			cout << "  [?] Immetti il coefficiente di x^" << i << ": ";
+		}
         cin >> p1[i];
     }
 
@@ -89,10 +101,16 @@ int main() {
     cout << "\n  Inserisci il grado del secondo polinomio (massimo 3): ";
     cin >> g2;
 
-    while(g2 > 3) {
+    while(g2 > 3) 
+	{
         cout << "  [!] Errore: il grado massimo supportato e' 3: ";
         cin >> g2;
     }
+    while(isalpha(g2))
+    {
+    	cout << "  [!] Errore: il programma registra solo numeri: ";
+        cin >> g2;	
+	}
 
     for (int i = g2; i >= 0; i--) {
         if (i == 0) cout << "  [?] Immetti il TERMINE NOTO: ";
@@ -128,7 +146,7 @@ int main() {
     cin >> scelta;
 
     // ---------------------------------------------------------
-    // 5. PANNELLO DI CONTROLLO (USER INTERFACE)
+    // 5. PANNELLO DI CONTROLLO (USER INTERFACE) 
     // ---------------------------------------------------------
     do {
         system("cls");
@@ -141,9 +159,12 @@ int main() {
         cout << "  || [2] SOTTRAZIONE     (Pol 1 - Pol 2)       ||" << endl;
         cout << "  || [3] MOLTIPLICAZIONE (Pol 1 * Pol 2)       ||" << endl;
         cout << "  || [4] RICERCA ZERI    (Studio P(x)=0)       ||" << endl;
-        cout << "  || [5] RESET SISTEMA                         ||" << endl;
-        cout << "  || [0] ESCI DAL PROGRAMMA                    ||" << endl;
-        cout << "  ||                                           ||" << endl;
+        cout << "  || [5] RICERCA E VISUALIZZAZIONE             ||" << endl;
+        cout << "  ||     DEI PUNTI DI INTERSEZIONE             ||" << endl;
+        cout << "  || [6] GRAFICO DEI POLINOMI                  ||" << endl;
+        cout << "  || [7] RESET SISTEMA                         ||" << endl;
+		cout << "  || [0] TERMINA PROGRAMMA                     ||" << endl;
+		cout << "  ||                                           ||" << endl;
         cout << "  ===============================================" << endl;
         cout << "\n  Scelta operativa: ";
         cin >> scelta;
@@ -229,6 +250,23 @@ int main() {
             cout << "\n  Premi un numero per tornare al pannello... ";
             int pausa; cin >> pausa;
         }
+        
+        else if (scelta == 6) goto inserimento;
+
+        if (scelta != 0) {
+            cout << "\n  Premi un numero per tornare al pannello... ";
+            int pausa; cin >> pausa;
+        }
+        
+        else if (scelta == 7) goto inserimento;
+
+        if (scelta != 0) {
+            cout << "\n  Premi un numero per tornare al pannello... ";
+            int pausa; cin >> pausa;
+        }
+        
+        else if (scelta == 7) goto inserimento;
+        
     } while (scelta != 0);
 
     // ---------------------------------------------------------
