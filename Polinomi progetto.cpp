@@ -42,10 +42,10 @@ int main() {
     cout << "          |            [ Sistema in fase di avvio ]..             |" << endl;
     cout << "          |                                                       |" << endl;
     cout << "          |                                                       |" << endl;
-    cout << "          |    _______________________________________________    |" << endl;
-    cout << "          |   |                                               |   |" << endl;
-    cout << "          |   |   Premi un tasto per avviare il programma...  |   |" << endl;
-    cout << "          |   |_______________________________________________|   |" << endl;
+    cout << "          |     _______________________________________________    |" << endl;
+    cout << "          |    |                                               |   |" << endl;
+    cout << "          |    |   Premi un tasto per avviare il programma...  |   |" << endl;
+    cout << "          |    |_______________________________________________|   |" << endl;
     cout << "          |                                                       |" << endl;
     cout << "          |_______________________________________________________|" << endl;
     
@@ -201,7 +201,7 @@ int main() {
             else if (scelta == 3) cout << "La moltiplicazione tra i due polinomi e' la seguente p(prod)";
             cout << "\033[0m = ";
             
-            // Stampa il risultato dell'operazione
+            // --- QUI IL FIX PER IL DOPPIO MENO ---
             bool nullo = true;
             int fine = (scelta == 3) ? (g1+g2) : 3;
             for (int i = fine; i >= 0; i--) {
@@ -209,14 +209,11 @@ int main() {
                 if (scelta == 1) valoreAttuale = somma[i];
                 else if (scelta == 2) valoreAttuale = diff[i];
                 else if (scelta == 3) valoreAttuale = prod[i];
+                
                 if (valoreAttuale != 0) {
-                    if (valoreAttuale > 0 && !nullo) cout << " + ";
-                    else if (valoreAttuale < 0) {
-                        if(!nullo) cout << " - ";
-                        else cout << "-";
-                    }
-                    if(!nullo) cout << abs(valoreAttuale);
-                    else cout << valoreAttuale;
+                    if (valoreAttuale > 0 && !nullo) cout << "+";
+                    // Se il numero è negativo, il segno meno è già parte di valoreAttuale
+                    cout << valoreAttuale; 
                     if (i > 0) cout << "x^" << i;
                     nullo = false;
                 }
@@ -366,22 +363,24 @@ int main() {
                    
                    
                 sprintf(leg2, "P2 (Verde) : %dx^3 + %dx^2 + %dx^1 + %d", p2[3], p2[2], p2[1], p2[0]); // Facciamo la stessa cosa per il secondo polinomio, salvando il testo nella variabile leg2.
-                                                                                                      // Questa scritta apparirà poi di colore verde sul grafico.
+                                                                                                   // Questa scritta apparirà poi di colore verde sul grafico.
                 
                 
                 // LEGENDA COLORATA nella finestra grafica
                 setcolor(YELLOW);
-                outtextxy(20, getmaxy()-40, leg1);
+                outtextxy(20, getmaxy()-60, leg1);
                 setcolor(GREEN);
-                outtextxy(20, getmaxy()-20, leg2);
+                outtextxy(20, getmaxy()-40, leg2);
+                setcolor(RED);
+                outtextxy(20, getmaxy()-20, (char*)"Intersezioni");
 
                 // Disegno dei punti dei polinomi
                 for (double i = -10; i <= 10; i += 0.4) // // Avviamo un ciclo for che fa scorrere la variabile 'i' (che rappresenta la nostra X)
-                                                       // da -10 a +10, con piccoli passi di 0.4 per rendere la curva abbastanza fluida.  
-				{
+                                                        // da -10 a +10, con piccoli passi di 0.4 per rendere la curva abbastanza fluida.  
+                {
                     double v1 = p1[3]*pow(i,3) + p1[2]*pow(i,2) + p1[1]*i + p1[0]; //  CALCOLO POLINOMIO 1 
-    // Calcoliamo il valore della Y (chiamata v1) inserendo la X (i) nell'equazione di 3° grado:
-    // ax^3 + bx^2 + cx + d
+                        // Calcoliamo il valore della Y (chiamata v1) inserendo la X (i) nell'equazione di 3° grado:
+                       // ax^3 + bx^2 + cx + d
                     if (v1 >= -10 && v1 <= 10) {
                         setcolor(YELLOW);
                         circle(mx + i*scala, my - v1*scala, 4); 
@@ -392,6 +391,41 @@ int main() {
                         circle(mx + i*scala, my - v2*scala, 4);
                     }
                 }
+
+                // --- AGGIUNTA PUNTI DI INTERSEZIONE (CERCHIO ROSSO PIU GRANDE) ---
+                if(g1 <= 2 && g2 <= 2) {
+                    double a = (double)p1[2] - p2[2];
+                    double b = (double)p1[1] - p2[1];
+                    double c = (double)p1[0] - p2[0];
+
+                    if(a == 0 && b != 0) { // Intersezione tra rette
+                        double ix = -c / b;
+                        double iy = p1[1] * ix + p1[0];
+                        if(ix >= -10 && ix <= 10 && iy >= -10 && iy <= 10) {
+                            setcolor(RED);
+                            circle(mx + ix*scala, my - iy*scala, 8);
+                        }
+                    } else if(a != 0) { // Intersezione parabolica
+                        double idelta = b*b - 4*a*c;
+                        if(idelta >= 0) {
+                            double ix1 = (-b + sqrt(idelta)) / (2*a);
+                            double iy1 = p1[2]*ix1*ix1 + p1[1]*ix1 + p1[0];
+                            if(ix1 >= -10 && ix1 <= 10 && iy1 >= -10 && iy1 <= 10) {
+                                setcolor(RED);
+                                circle(mx + ix1*scala, my - iy1*scala, 8);
+                            }
+                            if(idelta > 0) {
+                                double ix2 = (-b - sqrt(idelta)) / (2*a);
+                                double iy2 = p1[2]*ix2*ix2 + p1[1]*ix2 + p1[0];
+                                if(ix2 >= -10 && ix2 <= 10 && iy2 >= -10 && iy2 <= 10) {
+                                    setcolor(RED);
+                                    circle(mx + ix2*scala, my - iy2*scala, 8);
+                                }
+                            }
+                        }
+                    }
+                }
+
                 system("pause > nul");
                 closegraph(); // Chiude la finestra grafica
 
