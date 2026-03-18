@@ -44,7 +44,7 @@ int main() {
     cout << "          |                                                       |" << endl;
     cout << "          |    _______________________________________________    |" << endl;
     cout << "          |   |                                               |   |" << endl;
-    cout << "          |   |   Premi un tasto per avviare il programma...   |   |" << endl;
+    cout << "          |   |   Premi un tasto per avviare il programma...  |   |" << endl;
     cout << "          |   |_______________________________________________|   |" << endl;
     cout << "          |                                                       |" << endl;
     cout << "          |_______________________________________________________|" << endl;
@@ -88,7 +88,7 @@ int main() {
     system("color 0B");
     cout << "  ___________________________________________________________" << endl;
     cout << " |                                                           |" << endl;
-    cout << " |           ===> CONFIGURAZIONE SECONDO POLINOMIO <===       |" << endl;
+    cout << " |           ===> CONFIGURAZIONE SECONDO POLINOMIO <===      |" << endl;
     cout << " |___________________________________________________________|" << endl;
     cout << "\n\033[3m  Inserisci il grado del secondo polinomio (massimo 3): \033[0m";
     
@@ -127,7 +127,7 @@ int main() {
     cout << "                .--------------------------------------------." << endl;
     cout << "                |                SISTEMA DI CALCOLO          |" << endl;
     cout << "                |--------------------------------------------|" << endl;
-    cout << "                |  Stato: Elaborazione completata             |" << endl;
+    cout << "                |  Stato: Elaborazione completata            |" << endl;
     cout << "                |  Dati: Polinomi caricati correttamente     |" << endl;
     cout << "                '--------------------------------------------'" << endl;
     cout << "\n\033[3m                Digita un numero per visualizzare il menu: \033[0m";
@@ -138,7 +138,7 @@ int main() {
         system("cls");
         system("color 0B"); 
         cout << "  ===============================================" << endl;
-        cout << "  ||               PANNELLO DI CONTROLLO            ||" << endl;
+        cout << "  ||               PANNELLO DI CONTROLLO         ||" << endl;
         cout << "  ===============================================" << endl;
         cout << "  ||                                             ||" << endl;
         cout << "  || [1] ADDIZIONE       (Pol 1 + Pol 2)         ||" << endl;
@@ -356,9 +356,18 @@ int main() {
                     line(mx-5, my + i*scala, mx+5, my + i*scala); 
                 }
 
-                char leg1[100], leg2[100];
-                sprintf(leg1, "P1 (Giallo): %dx^3 + %dx^2 + %dx^1 + %d", p1[3], p1[2], p1[1], p1[0]);
-                sprintf(leg2, "P2 (Verde) : %dx^3 + %dx^2 + %dx^1 + %d", p2[3], p2[2], p2[1], p2[0]);
+                char leg1[100], leg2[100]; //  Dichiariamo due "array di caratteri" (stringhe) capaci di contenere fino a 100 lettere/numeri ciascuno.
+                                           // Serviranno a memorizzare il testo del Polinomio 1 e del Polinomio 2.
+                                           
+                                           
+                sprintf(leg1, "P1 (Giallo): %dx^3 + %dx^2 + %dx^1 + %d", p1[3], p1[2], p1[1], p1[0]); // // La funzione sprintf (string-print-format) "stampa" dentro la variabile leg1.
+                   // %d sono dei segnaposto: verranno sostituiti dai valori contenuti in p1[3], p1[2], p1[1] e p1[0].
+                   // Il risultato finale sarà una scritta tipo: "P1 (Giallo): 2x^3 + 0x^2 + 5x^1 + 3"
+                   
+                   
+                sprintf(leg2, "P2 (Verde) : %dx^3 + %dx^2 + %dx^1 + %d", p2[3], p2[2], p2[1], p2[0]); // Facciamo la stessa cosa per il secondo polinomio, salvando il testo nella variabile leg2.
+                                                                                                      // Questa scritta apparirà poi di colore verde sul grafico.
+                
                 
                 // LEGENDA COLORATA nella finestra grafica
                 setcolor(YELLOW);
@@ -367,14 +376,18 @@ int main() {
                 outtextxy(20, getmaxy()-20, leg2);
 
                 // Disegno dei punti dei polinomi
-                for (double i = -15; i <= 15; i += 0.4) {
-                    double v1 = p1[3]*pow(i,3) + p1[2]*pow(i,2) + p1[1]*i + p1[0];
-                    if (v1 >= -15 && v1 <= 15) {
+                for (double i = -10; i <= 10; i += 0.4) // // Avviamo un ciclo for che fa scorrere la variabile 'i' (che rappresenta la nostra X)
+                                                       // da -10 a +10, con piccoli passi di 0.4 per rendere la curva abbastanza fluida.  
+				{
+                    double v1 = p1[3]*pow(i,3) + p1[2]*pow(i,2) + p1[1]*i + p1[0]; //  CALCOLO POLINOMIO 1 
+    // Calcoliamo il valore della Y (chiamata v1) inserendo la X (i) nell'equazione di 3° grado:
+    // ax^3 + bx^2 + cx + d
+                    if (v1 >= -10 && v1 <= 10) {
                         setcolor(YELLOW);
                         circle(mx + i*scala, my - v1*scala, 4); 
                     }
                     double v2 = p2[3]*pow(i,3) + p2[2]*pow(i,2) + p2[1]*i + p2[0];
-                    if (v2 >= -15 && v2 <= 15) {
+                    if (v2 >= -10 && v2 <= 10) {
                         setcolor(GREEN);
                         circle(mx + i*scala, my - v2*scala, 4);
                     }
