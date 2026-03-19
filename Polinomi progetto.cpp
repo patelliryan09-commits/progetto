@@ -42,14 +42,14 @@ int main() {
     cout << "          |            [ Sistema in fase di avvio ]..             |" << endl;
     cout << "          |                                                       |" << endl;
     cout << "          |                                                       |" << endl;
-    cout << "          |     _______________________________________________    |" << endl;
-    cout << "          |    |                                               |   |" << endl;
-    cout << "          |    |   Premi un tasto per avviare il programma...  |   |" << endl;
-    cout << "          |    |_______________________________________________|   |" << endl;
+    cout << "          |     _______________________________________________   |" << endl;
+    cout << "          |    |                                               |  |" << endl;
+    cout << "          |    |   Premi un tasto per avviare il programma...  |  |" << endl;
+    cout << "          |    |_______________________________________________|  |" << endl;
     cout << "          |                                                       |" << endl;
     cout << "          |_______________________________________________________|" << endl;
     
-    system("pause > nul"); // Blocca il programma finché non premi un tasto (senza mostrare scritte)
+    system("pause > nul"); // Blocca il programma finchÃ© non premi un tasto (senza mostrare scritte)
 
     // --- ETICHETTA DI RESET (GOTO) ---
     inserimento:
@@ -73,7 +73,7 @@ int main() {
         cin.ignore(1000, '\n'); // Svuota il buffer
     }
 
-    // Ciclo per inserire i coefficienti partendo dal grado più alto
+    // Ciclo per inserire i coefficienti partendo dal grado piÃ¹ alto
     for (int i = g1; i >= 0; i--) {
         if (i == 0) cout << "\033[3m  [?] Immetti il TERMINE NOTO: \033[0m";
         else cout << "  \033[32;3m[?] Immetti il coefficiente di \033[33m" << "x^" << i << "\033[0m\033[3m: \033[0m";
@@ -130,16 +130,16 @@ int main() {
     cout << "                |  Stato: Elaborazione completata            |" << endl;
     cout << "                |  Dati: Polinomi caricati correttamente     |" << endl;
     cout << "                '--------------------------------------------'" << endl;
-    cout << "\n\033[3m                Digita un numero per visualizzare il menu: \033[0m";
-    cin >> scelta;
+    cout << "\n\033[3m                Premi un qualsiasi tasto per visualizzare il menu: \033[0m";
+    system("pause > nul");
 
     // --- LOOP MENU PRINCIPALE ---
     do {
         system("cls");
         system("color 0B"); 
-        cout << "  ===============================================" << endl;
+        cout << "  ================================================" << endl;
         cout << "  ||               PANNELLO DI CONTROLLO         ||" << endl;
-        cout << "  ===============================================" << endl;
+        cout << "  ================================================" << endl;
         cout << "  ||                                             ||" << endl;
         cout << "  || [1] ADDIZIONE       (Pol 1 + Pol 2)         ||" << endl;
         cout << "  || [2] SOTTRAZIONE     (Pol 1 - Pol 2)         ||" << endl;
@@ -150,7 +150,7 @@ int main() {
         cout << "  || [7] RESET SISTEMA                           ||" << endl;
         cout << "  || [0] ESCI DAL PROGRAMMA                      ||" << endl;
         cout << "  ||                                             ||" << endl;
-        cout << "  ===============================================" << endl;
+        cout << "  ================================================" << endl;
         cout << "\n\033[3m  Scelta operativa: \033[0m";
         cin >> scelta;
 
@@ -212,7 +212,7 @@ int main() {
                 
                 if (valoreAttuale != 0) {
                     if (valoreAttuale > 0 && !nullo) cout << "+";
-                    // Se il numero è negativo, il segno meno è già parte di valoreAttuale
+                    // Se il numero Ã¨ negativo, il segno meno Ã¨ giÃ  parte di valoreAttuale
                     cout << valoreAttuale; 
                     if (i > 0) cout << "x^" << i;
                     nullo = false;
@@ -348,7 +348,7 @@ int main() {
                 outtextxy(mx+10, 10, (char*)"Y");
                 
                 // Disegno delle tacche sugli assi
-                for(int i=-15; i<=15; i++) {
+                for(int i=-10; i<=10; i++) {
                     line(mx + i*scala, my-5, mx + i*scala, my+5); 
                     line(mx-5, my + i*scala, mx+5, my + i*scala); 
                 }
@@ -359,11 +359,11 @@ int main() {
                                            
                 sprintf(leg1, "P1 (Giallo): %dx^3 + %dx^2 + %dx^1 + %d", p1[3], p1[2], p1[1], p1[0]); // // La funzione sprintf (string-print-format) "stampa" dentro la variabile leg1.
                    // %d sono dei segnaposto: verranno sostituiti dai valori contenuti in p1[3], p1[2], p1[1] e p1[0].
-                   // Il risultato finale sarà una scritta tipo: "P1 (Giallo): 2x^3 + 0x^2 + 5x^1 + 3"
+                   // Il risultato finale sarÃ  una scritta tipo: "P1 (Giallo): 2x^3 + 0x^2 + 5x^1 + 3"
                    
                    
                 sprintf(leg2, "P2 (Verde) : %dx^3 + %dx^2 + %dx^1 + %d", p2[3], p2[2], p2[1], p2[0]); // Facciamo la stessa cosa per il secondo polinomio, salvando il testo nella variabile leg2.
-                                                                                                   // Questa scritta apparirà poi di colore verde sul grafico.
+                                                                                                   // Questa scritta apparirÃ  poi di colore verde sul grafico.
                 
                 
                 // LEGENDA COLORATA nella finestra grafica
@@ -379,7 +379,7 @@ int main() {
                                                         // da -10 a +10, con piccoli passi di 0.4 per rendere la curva abbastanza fluida.  
                 {
                     double v1 = p1[3]*pow(i,3) + p1[2]*pow(i,2) + p1[1]*i + p1[0]; //  CALCOLO POLINOMIO 1 
-                        // Calcoliamo il valore della Y (chiamata v1) inserendo la X (i) nell'equazione di 3° grado:
+                        // Calcoliamo il valore della Y (chiamata v1) inserendo la X (i) nell'equazione di 3Â° grado:
                        // ax^3 + bx^2 + cx + d
                     if (v1 >= -10 && v1 <= 10) {
                         setcolor(YELLOW);
@@ -427,13 +427,8 @@ int main() {
                 }
 
                 system("pause > nul");
-                closegraph(); // Chiude la finestra grafica
-
-                // Sequenza di chiusura automatica dopo aver visto il grafico
-                system("cls");
-                cout << "\n\033[3m  Chiusura del sistema in corso...\033[0m" << endl;
-                cout << "\033[3m  Sviluppato con successo. Arrivederci!\033[0m" << endl;
-                return 0;
+                closegraph(); // Chiude la finestra grafica.
+                continue;
             }
         }
         
@@ -442,9 +437,9 @@ int main() {
 
         // --- PAUSA TRA LE OPERAZIONI ---
         if (scelta != 0) {
-            cout << "\n\033[3m  Premi un numero per tornare al pannello... \033[0m";
-            int pausa; cin >> pausa;
-        }
+            cout << "\n\033[3m  Premi un qualsiasi tasto per tornare al pannello... \033[0m";
+            system("pause > nul");
+       	}
     } while (scelta != 0);
 
     // --- SEQUENZA DI CHIUSURA (SCELTA 0) ---
