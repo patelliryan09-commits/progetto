@@ -152,7 +152,6 @@ int main() {
         cout << "  ||                                             ||" << endl;
         cout << "  ================================================" << endl;
         cout << "\n\033[3m  Scelta operativa: \033[0m";
-        cin >> scelta;
         
         while(!(cin >> scelta)) {
 			cout << " \033[1;31;3m[!] ERRORE: Devi inserire un NUMERO, non una lettera!\033[0m" << endl;
@@ -337,7 +336,8 @@ int main() {
             cout << "  [\033[1;31mSI\033[0m\033[3m] -> Preparati a visualizzare la nostra grafica!" << endl;
             cout << "  [\033[1;31mNO\033[0m\033[3m] -> Forse e' meglio ritornare al menu ..." << endl << endl;
             cout << "  Inserisci la tua scelta (S/N): \033[0m";
-            cin >> conf;
+            cout<<endl;
+		  cin >> conf;
 
             if (toupper(conf) == 'N') {
                 continue; 
