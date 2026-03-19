@@ -153,6 +153,13 @@ int main() {
         cout << "  ================================================" << endl;
         cout << "\n\033[3m  Scelta operativa: \033[0m";
         cin >> scelta;
+        
+        while(!(cin >> scelta)) {
+			cout << " \033[1;31;3m[!] ERRORE: Devi inserire un NUMERO, non una lettera!\033[0m" << endl;
+			cout << " \033[3mScelta operativa: \033[0m";
+			cin.clear();
+			cin.ignore(1000, '\n');
+	}
 
         system("cls");
         
