@@ -446,5 +446,12 @@ int main() {
     system("cls");
     cout << "\n\033[3m  Chiusura del sistema in corso...\033[0m" << endl;
     cout << "\033[3m  Sviluppato con successo. Arrivederci!\033[0m" << endl;
+    cout<<endl;
+    cout<<endl;
+    cout << "  ____   ____      _     _____  ___   _____" <<endl;
+    cout << " / ___| |  _ \\    / \\   |__  / |_ _| |  ___|" <<endl;
+    cout << "| |  _  | |_) |  / _ \\    / /   | |  |  _|  " <<endl;
+    cout << "| |_| | |  _ <  / ___ \\  / /_   | |  | |___ " <<endl;
+    cout << " \\____| |_| \\_\\/_/   \\_\\/____| |___| |_____|" <<endl;
     return 0;
 }
