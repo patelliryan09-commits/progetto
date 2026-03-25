@@ -113,15 +113,17 @@ int main() {
     }
 
     // --- OPERAZIONI ALGEBRICHE ---
-    // Calcolo immediato di Somma e Differenza (si sommano i coefficienti dello stesso grado)
+    // Somma e Differenza: operiamo termine a termine (coefficienti dello stesso grado)
     for (int i = 0; i < 4; i++) {
         somma[i] = p1[i] + p2[i];
         diff[i] = p1[i] - p2[i];
     }
-    // Calcolo Moltiplicazione: ogni termine del primo moltiplica tutti quelli del secondo
-    // Il grado del risultato i+j si accumula nell'array prod
+    // Moltiplicazione (Prodotto tra polinomi):
+    // Usiamo un doppio ciclo: ogni termine del Pol1 (grado i) viene moltiplicato per ogni termine del Pol2 (grado j).
+    // Il risultato avra' grado (i+j). Esempio: x^2 * x^1 = x^(2+1) = x^3.
     for (int i = 0; i <= g1; i++) {
         for (int j = 0; j <= g2; j++) {
+            // Accumuliamo il prodotto dei coefficienti nella posizione corrispondente alla somma dei gradi
             prod[i + j] = prod[i + j] + (p1[i] * p2[j]);
         }
     }
@@ -130,9 +132,9 @@ int main() {
     system("color 0F"); // Testo bianco su sfondo nero
     cout << "\n\n";
     cout << "                  .--------------------------------------------." << endl;
-    cout << "                  |               SISTEMA DI CALCOLO            |" << endl;
+    cout << "                  |               SISTEMA DI CALCOLO           |" << endl;
     cout << "                  |--------------------------------------------|" << endl;
-    cout << "                  |  Stato: Elaborazione completata             |" << endl;
+    cout << "                  |  Stato: Elaborazione completata            |" << endl;
     cout << "                  |  Dati: Polinomi caricati correttamente     |" << endl;
     cout << "                  '--------------------------------------------'" << endl;
     cout << "\n\033[3m                  Premi un qualsiasi tasto per visualizzare il menu: \033[0m";
@@ -215,7 +217,7 @@ int main() {
             else if (scelta == 3) cout << "La moltiplicazione tra i due polinomi e' la seguente p(prod)";
             cout << "\033[0m = ";
             
-            // Stampa il risultato finale
+            // Stampa il risultato finale scorrendo l'array corrispondente alla scelta
             bool nullo = true;
             int fine = (scelta == 3) ? (g1+g2) : 3;
             for (int i = fine; i >= 0; i--) {
@@ -307,7 +309,7 @@ int main() {
                 double b = (double)p1[1] - p2[1];
                 double c = (double)p1[0] - p2[0];
 
-                if(a == 0) { // Caso lineare
+                if(a == 0) { // Caso lineare (diventa un'equazione di primo grado)
                     if(b == 0) {
                         if(c == 0) cout << "\033[3m  [!] COINCIDENTI: Infiniti punti.\033[0m";
                         else cout << "\033[3m  [!] PARALLELE: Nessun punto.\033[0m";
@@ -316,7 +318,7 @@ int main() {
                         y1 = p1[1] * x1 + p1[0];
                         cout << "\033[3m  Intersezione retta-retta: (\033[1;31m" << x1 << "\033[0m\033[3m ; \033[1;31m" << y1 << "\033[0m\033[3m)\033[0m";
                     }
-                } else { // Caso parabolico/secondo grado
+                } else { // Caso parabolico/secondo grado (uso del Delta)
                     delta = b*b - 4*a*c;
                     if(delta < 0) cout << "\033[3m  [!] Nessun punto di intersezione reale.\033[0m";
                     else if(delta == 0) {
@@ -388,6 +390,12 @@ int main() {
                 int gd = DETECT, gm;
                 initgraph(&gd, &gm, (char*)"", 0, 0); 
                 
+                // --- FIX FOCUS E CURSORE ---
+                // setvisualpage e setactivepage forzano Windows a riconoscere la pagina 0 come quella corrente.
+                // Questo risolve il problema del cerchietto di caricamento che appare quando il sistema non sa dove posizionare il mouse.
+                setvisualpage(0);
+                setactivepage(0);
+                
                 delay(100); 
                 
                 int mx = getmaxx()/2; // Centro X dello schermo
@@ -425,7 +433,7 @@ int main() {
                 outtextxy(20, getmaxy()-20, (char*)"Intersezioni (Rosso)");
 
                 // Disegno effettivo delle curve polinomiali
-                // Ciclo su un range di X da -10 a 10 con piccoli passi (0.1)
+                // Ciclo su un range di X da -10 a 10 con piccoli passi (0.1) per rendere la curva fluida
                 for (double i = -10; i <= 10; i += 0.1) 
                 {
                     double v1 = p1[3]*pow(i,3) + p1[2]*pow(i,2) + p1[1]*i + p1[0]; 
@@ -442,7 +450,7 @@ int main() {
                         circle(mx + i*scalaX, my - v2*scalaY, 4);
                     }
 
-                    // Se i valori sono molto vicini, segna il punto come sovrapposizione
+                    // Se i valori sono molto vicini (differenza < 0.05), segna il punto come sovrapposizione
                     if (abs(v1 - v2) < 0.05) { 
                         setcolor(CYAN);
                         circle(mx + i*scalaX, my - v1*scalaY, 5); 
@@ -488,7 +496,7 @@ int main() {
                 }
 
                 getch(); // Aspetta pressione tasto per uscire dalla grafica
-                closegraph(); // Chiude la finestra grafica
+                closegraph(); // Chiude la finestra grafica e libera la memoria
                 continue; 
             }
         }
