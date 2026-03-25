@@ -1,31 +1,33 @@
-#include <iostream>  // Libreria standard per input (cin) e output (cout)
-#include <cstdlib>   // Serve per i comandi di sistema come "cls" (pulisce lo schermo) e "color"
-#include <cmath>     // Fondamentale per le funzioni matematiche come pow() (potenza) e sqrt() (radice)
-#include <iomanip>   // Serve per gestire la formattazione dell'output (spazi, precisione decimali)
-#include <cctype>    // Usata per la funzione toupper() che trasforma le lettere in maiuscolo
-#include <conio.h>   // Fornisce getch(), usato per bloccare la schermata finché non premi un tasto
-#include "graphics2.h" // La libreria esterna per disegnare il piano cartesiano e i polinomi
+#include <iostream>  // Serve per stampare e leggere (cout e cin)
+#include <cstdlib>   // Serve per pulire lo schermo e cambiare colore
+#include <cmath>     // Serve per fare i calcoli come le potenze e le radici
+#include <iomanip>   // Serve per mettere in ordine i numeri decimali
+#include <cctype>    // Serve per trasformare le lettere in maiuscolo
+#include <conio.h>   // Serve per bloccare lo schermo finche' non premi un tasto
+#include "graphics2.h" // La libreria per fare i disegni del grafico
 
 using namespace std;
 
 int main() {
     
     // --- MESSAGGI DI AVVIO ---
-    // Usiamo sequenze ANSI (\033[3m) per rendere il testo corsivo e dare un tocco in piu' al programma
+    // Scritte all'inizio del programma (il \033[3m serve per farle apparire in corsivo)
     cout << "\033[3mAvvio del progetto polinomi...\033[0m" << endl;
     cout << "\033[3mCaricamento moduli matematici e grafici...\033[0m" << endl;
 
     // --- DICHIARAZIONE VARIABILI ---
-    // p1 e p2 sono array di 4 elementi: p[0] è il termine noto, p[1] è x^1, p[2] è x^2, p[3] è x^3
+    // Qui creo le liste di numeri (array) per i polinomi e i risultati
+    // p1[0] e' il numero da solo, p1[3] e' quello con x^3
     int p1[4], p2[4], somma[4], diff[4], prod[7];
     int g1, g2, scelta, sceltaDelta;
     double x1, x2, y1, y2, delta; 
 
     // --- 2. INTERFACCIA GRAFICA ---
-    system("cls");      // Pulisce la console
-    system("color 0B"); // Imposta lo sfondo nero (0) e il testo azzurro chiaro (B)
+    // Comandi per pulire tutto e mettere lo sfondo nero con le scritte azzurre
+    system("cls");      
+    system("color 0B"); 
 
-    // Cornice ASCII Art per il titolo iniziale
+    // Qui disegno il titolo gigante con i bordi fatti di trattini
     cout << "\n\n";
     cout << "          ._______________________________________________________." << endl;
     cout << "          |                                                       |" << endl;
@@ -44,14 +46,14 @@ int main() {
     cout << "          |     |_______________________________________________| |" << endl;
     cout << "          |                                                       |" << endl;
     cout << "          |_______________________________________________________|" << endl;                        
-    system("pause > nul"); // Blocca il programma finché non premi un tasto (nasconde il messaggio di default)
+    system("pause > nul"); // Aspetta che l'utente prema un tasto senza scrivere nulla
     
 
     // --- ETICHETTA DI RESET (GOTO) ---
-    // Se l'utente sceglie "Reset", il programma torna qui e azzera tutti i coefficienti
+    // Se l'utente resetta, il programma torna qui e svuota tutti i numeri (li mette a zero)
     inserimento:
     for(int i=0; i<4; i++) { p1[i]=0; p2[i]=0; somma[i]=0; diff[i]=0; }
-    for(int i=0; i<7; i++) { prod[i]=0; } // Il prodotto può arrivare fino al grado 6 (3+3)
+    for(int i=0; i<7; i++) { prod[i]=0; } 
 
     // --- CONFIGURAZIONE PRIMO POLINOMIO ---
     system("cls");
@@ -62,18 +64,18 @@ int main() {
     cout << " |___________________________________________________________|" << endl;
     cout << "\n\033[3m  Inserisci il grado del primo polinomio (massimo 3): \033[0m";
     
-    // Controllo  dell'input: se inserisco lettere o numeri > 3, il programma non crasha
+    // Controllo che l'utente metta un numero giusto tra 0 e 3
     while(!(cin >> g1) || g1 > 3 || g1 < 0) {
         if(cin.fail()){
              cout << "  \033[1;31;3m[!] Inserisci un numero valido , non una lettera o caratteri speciali mi raccomando: \033[0m";
         } else {
              cout << "  \033[1;31;3m[!] Attenzione RIPROVA il grado massimo e' 3 : \033[0m";
         }
-        cin.clear(); // Resetta lo stato di errore di cin
-        cin.ignore(1000, '\n'); // Svuota il buffer per evitare loop infiniti
+        cin.clear(); // Toglie l'errore se l'utente ha scritto una lettera
+        cin.ignore(1000, '\n'); // Svuota quello che l'utente ha scritto per sbaglio
     }
 
-    // Ciclo per inserire i coefficienti partendo dal grado più alto
+    // Qui chiedo i numeri del polinomio uno alla volta (dal piu' alto al piu' basso)
     for (int i = g1; i >= 0; i--) {
         if (i == 0) cout << "\033[3m  [?] Immetti il TERMINE NOTO: \033[0m";
         else cout << "  \033[32;3m[?] Immetti il coefficiente di \033[33m" << "x^" << i << "\033[0m\033[3m: \033[0m";
@@ -84,7 +86,7 @@ int main() {
     }
 
     // --- CONFIGURAZIONE SECONDO POLINOMIO ---
-    // (Stessa logica di controllo del primo polinomio)
+    // Rifaccio la stessa cosa di prima per il secondo polinomio
     system("cls");
     system("color 0B");
     cout << "  ___________________________________________________________" << endl;
@@ -113,23 +115,21 @@ int main() {
     }
 
     // --- OPERAZIONI ALGEBRICHE ---
-    // Somma e Differenza: operiamo termine a termine (coefficienti dello stesso grado)
+    // Faccio subito i calcoli di somma e sottrazione mettendo insieme i termini simili
     for (int i = 0; i < 4; i++) {
         somma[i] = p1[i] + p2[i];
         diff[i] = p1[i] - p2[i];
     }
-    // Moltiplicazione (Prodotto tra polinomi):
-    // Usiamo un doppio ciclo: ogni termine del Pol1 (grado i) viene moltiplicato per ogni termine del Pol2 (grado j).
-    // Il risultato avra' grado (i+j). Esempio: x^2 * x^1 = x^(2+1) = x^3.
+    // Per la moltiplicazione devo moltiplicare ogni pezzo del primo per ogni pezzo del secondo
     for (int i = 0; i <= g1; i++) {
         for (int j = 0; j <= g2; j++) {
-            // Accumuliamo il prodotto dei coefficienti nella posizione corrispondente alla somma dei gradi
+            // Sommo i gradi (i+j) e calcolo il nuovo coefficiente
             prod[i + j] = prod[i + j] + (p1[i] * p2[j]);
         }
     }
 
     system("cls");
-    system("color 0F"); // Testo bianco su sfondo nero
+    system("color 0F"); // Cambio colore in bianco per far capire che ho finito i calcoli
     cout << "\n\n";
     cout << "                  .--------------------------------------------." << endl;
     cout << "                  |               SISTEMA DI CALCOLO           |" << endl;
@@ -141,6 +141,7 @@ int main() {
     system("pause > nul");
 
     // --- LOOP MENU PRINCIPALE ---
+    // Questo ciclo fa apparire il menu finche' l'utente non decide di uscire (premendo 0)
     do {
         system("cls");
         system("color 0B"); 
@@ -160,6 +161,7 @@ int main() {
         cout << "  ================================================" << endl;
         cout << "\n\033[3m  Scelta operativa: \033[0m";
         
+        // Controllo che il numero scelto sia nel menu
         while(!(cin >> scelta) || scelta < 0 || scelta > 7) {
             if(cin.fail()){
                 cout << " \033[1;31;3m[!] ERRORE: Devi inserire un NUMERO, non una lettera ne un carattere speciale!\033[0m" << endl;
@@ -174,9 +176,10 @@ int main() {
         system("cls");
         
         // --- LOGICA DELLE OPERAZIONI ALGEBRICHE (SCELTE 1, 2, 3) ---
+        // Se l'utente ha scelto 1, 2 o 3, mostro il calcolo a video
         if (scelta >= 1 && scelta <= 3) {
             system("color 0F"); 
-            // Mostra il Polinomio 1 formattato bene (evita di mostrare i gradi con coeff 0)
+            // Qui stampo il primo polinomio saltando i numeri che sono 0 per farlo stare bene
             cout << "\033[3m  Polinomio 1: (\033[0m";
             bool primoTermine = true;
             for (int i = 3; i >= 0; i--) { 
@@ -190,13 +193,13 @@ int main() {
             if(primoTermine) cout << "0"; 
             cout << "\033[3m) \033[0m";
 
-            // Mostra il segno dell'operazione
+            // Stampo il segno dell'operazione (+, - o *)
             if (scelta == 1) cout << "\033[3m +\033[0m";
             else if (scelta == 2) cout << "\033[3m -\033[0m";
             else if (scelta == 3) cout << "\033[3m *\033[0m";
             cout << "\n";
 
-            // Mostra il Polinomio 2
+            // Stampo il secondo polinomio
             cout << "\033[3m  Polinomio 2: (\033[0m";
             primoTermine = true;
             for (int i = 3; i >= 0; i--) { 
@@ -217,7 +220,7 @@ int main() {
             else if (scelta == 3) cout << "La moltiplicazione tra i due polinomi e' la seguente p(prod)";
             cout << "\033[0m = ";
             
-            // Stampa il risultato finale scorrendo l'array corrispondente alla scelta
+            // Stampo il risultato finale gestendo i segni + e - correttamente
             bool nullo = true;
             int fine = (scelta == 3) ? (g1+g2) : 3;
             for (int i = fine; i >= 0; i--) {
@@ -238,6 +241,7 @@ int main() {
         }
         
         // --- RICERCA ZERI (SCELTA 4) ---
+        // Qui cerco quando il polinomio tocca lo zero (equazione p(x)=0)
         else if (scelta == 4) {
             system("color 0A"); 
             cout << "  ._____________________________________________. " << endl;
@@ -252,12 +256,12 @@ int main() {
             cout << "\n\033[3m  Inserisci scelta: \033[0m"; cin >> sceltaDelta;
             system("cls");
             
-            // Ciclo per studiare il polinomio scelto o entrambi
+            // Faccio lo studio matematico per quello che ha scelto l'utente
             for(int k=1; k<=2; k++) {
                 if((sceltaDelta == 1 && k == 2) || (sceltaDelta == 2 && k == 1)) continue;
                 double ta, tb, tc;
                 int tg;
-                // Assegniamo temporaneamente i coefficienti per il calcolo
+                // Uso delle variabili d'appoggio (ta, tb, tc) per rendere le formule piu' facili
                 if(k==1) { ta=p1[2]; tb=p1[1]; tc=p1[0]; tg=g1; }
                 else { ta=p2[2]; tb=p2[1]; tc=p2[0]; tg=g2; }
                 
@@ -265,13 +269,13 @@ int main() {
                 cout << "  |  [ ANALISI MATEMATICA POLINOMIO " << k << ": P(x)=0 ]   |" << endl;
                 cout << "  '-----------------------------------------------'" << endl;
                 
-                // Studio delle soluzioni in base al grado
+                // Vedo di che grado e' l'equazione e uso la formula giusta
                 if (tg == 0) {
                     if(tc == 0) cout << "\033[32;3m  > EQUAZIONE INDETERMINATA (0=0)\033[0m" << endl;
                     else cout << "\033[32;3m  > EQUAZIONE IMPOSSIBILE (" << tc << "=0)\033[0m" << endl;
                 }
                 else if (tg == 1) {
-                    // Equazione bx + c = 0  -> x = -c/b
+                    // Se e' di primo grado faccio x = -c / b
                     if(tb == 0) {
                         if(tc == 0) cout << "\033[32;3m  > EQUAZIONE INDETERMINATA\033[0m" << endl;
                         else cout << "\033[32;3m  > EQUAZIONE IMPOSSIBILE\033[0m" << endl;
@@ -280,7 +284,7 @@ int main() {
                         cout << "\033[32;3m  > Risultato: x = " << (double)-tc/tb << "\033[0m" << endl;
                     }
                 } else if (tg == 2) {
-                    // Formula risolutiva equazioni II grado: Delta = b^2 - 4ac
+                    // Se e' di secondo grado uso il Delta e la formula con la radice
                     double deltaEq = (tb * tb) - (4 * ta * tc);
                     cout << "\033[3m  > EQUAZIONE DI II GRADO (Quadratica)\033[0m" << endl;
                     cout << "\033[32;3m  > Calcolo: Delta = " << deltaEq << "\033[0m" << endl;
@@ -297,19 +301,19 @@ int main() {
         }
         
         // --- RICERCA INTERSEZIONI (SCELTA 5) ---
+        // Qui cerco dove i due polinomi si toccano (faccio p1 - p2 = 0)
         else if (scelta == 5) { 
             system("color 0E"); 
             cout << "\033[3m  [ RICERCA PUNTI DI INTERSEZIONE ]\033[0m" << endl;
             cout << "  -----------------------------------------------" << endl;
             
-            // Analisi per gradi fino al secondo
+            // Calcolo la differenza tra i due e studio il risultato
             if(g1 <= 2 && g2 <= 2) {
-                // Sottraiamo i due polinomi per trovare dove P1 - P2 = 0
                 double a = (double)p1[2] - p2[2];
                 double b = (double)p1[1] - p2[1];
                 double c = (double)p1[0] - p2[0];
 
-                if(a == 0) { // Caso lineare (diventa un'equazione di primo grado)
+                if(a == 0) { // Se il termine al quadrato sparisce, e' una retta
                     if(b == 0) {
                         if(c == 0) cout << "\033[3m  [!] COINCIDENTI: Infiniti punti.\033[0m";
                         else cout << "\033[3m  [!] PARALLELE: Nessun punto.\033[0m";
@@ -318,7 +322,7 @@ int main() {
                         y1 = p1[1] * x1 + p1[0];
                         cout << "\033[3m  Intersezione retta-retta: (\033[1;31m" << x1 << "\033[0m\033[3m ; \033[1;31m" << y1 << "\033[0m\033[3m)\033[0m";
                     }
-                } else { // Caso parabolico/secondo grado (uso del Delta)
+                } else { // Se resta il quadrato uso il delta
                     delta = b*b - 4*a*c;
                     if(delta < 0) cout << "\033[3m  [!] Nessun punto di intersezione reale.\033[0m";
                     else if(delta == 0) {
@@ -341,15 +345,16 @@ int main() {
         }
         
         // --- RAPPRESENTAZIONE GRAFICA (SCELTA 6) ---
+        // Qui si apre la finestra per disegnare le funzioni
         else if (scelta == 6) { 
             char conf;
             do {
                 cout << "\033[0;3m" << "  SEI SICURO DI VOLER VEDERE LA GRAFICA DEI POLINOMI?" << endl << endl;
-                cout << "  [\033[1;31mS\033[0m\033[3m] -> Preparati a visualizzare la nostra grafica!" << endl;
-                cout << "  [\033[1;31mN\033[0m\033[3m] -> Forse e' meglio ritornare al menu ..." << endl << endl;
+                cout << "  [\033[1;31mSI\033[0m\033[3m] -> Preparati a visualizzare la nostra grafica!" << endl;
+                cout << "  [\033[1;31mNO\033[0m\033[3m] -> Forse e' meglio ritornare al menu ..." << endl << endl;
                 cout << "  Inserisci la tua scelta (S/N): \033[0m";
                 cin >> conf;
-                conf = toupper(conf);
+                conf = toupper(conf); // Trasforma 's' in 'S' per non avere problemi
                 if(conf != 'S' && conf != 'N') {
                     cout << "\033[1;31m  [!] ERRORE: Devi inserire 'S' per SI o 'N' per NO!\033[0m" << endl << endl;
                 }
@@ -358,7 +363,7 @@ int main() {
             if (conf == 'N') {
                 int sceltaNo;
                 system("cls");
-                cout << "\n\033[1;31m  [\033[0m\033[3m實NO\033[1;31m]\033[0m \033[3mse desideri ritornare al menu, o desideri uscire dal nostro progetto polinomi\033[0m" << endl << endl;
+                cout << "\n\033[1;31m[\033[0m\033[3mNO\033[1;31m]\033[0m \033[3mse desideri ritornare al menu, o desideri uscire dal nostro progetto polinomi\033[0m" << endl << endl;
                 cout << "  \033[1;31mPremi 1\033[0m \033[3mper ritornare al pannello di controllo\033[0m" << endl;
                 cout << "  \033[1;31mPremi 0\033[0m \033[3mse vuoi uscire dal programma\033[0m" << endl;
                 cout << "\n  Scelta: "; cin >> sceltaNo;
@@ -386,30 +391,28 @@ int main() {
                 cout << "\n  \033[1;31mAvvio grafica in corso... (premi un tasto)\033[0m";
                 system("pause > nul");
 
-                // Inizializzazione driver grafico
+                // Carico il motore grafico (BGI)
                 int gd = DETECT, gm;
                 initgraph(&gd, &gm, (char*)"", 0, 0); 
                 
-                // --- FIX FOCUS E CURSORE ---
-                // setvisualpage e setactivepage forzano Windows a riconoscere la pagina 0 come quella corrente.
-                // Questo risolve il problema del cerchietto di caricamento che appare quando il sistema non sa dove posizionare il mouse.
+                // Imposto la pagina per disegnare senza che l'immagine "tremi" (flickering)
                 setvisualpage(0);
                 setactivepage(0);
                 
-                delay(100); 
+                delay(100); // Aspetto un attimo che la scheda video sia pronta
                 
-                int mx = getmaxx()/2; // Centro X dello schermo
-                int my = getmaxy()/2; // Centro Y dello schermo
-                int scalaX = 30; // Pixel per ogni unità matematica
-                int scalaY = (int)(scalaX * (double)getmaxx() / getmaxy() * 0.6);        
+                int mx = getmaxx()/2; // Trovo il centro X dello schermo
+                int my = getmaxy()/2; // Trovo il centro Y dello schermo
+                int scalaX = 30;      // Zoom per asse X
+                int scalaY = (int)(scalaX * (double)getmaxx() / getmaxy() * 0.6); // Zoom corretto per asse Y       
 
-                // Disegno assi Cartesiani
+                // Disegno le righe degli assi X e Y
                 line(0, my, getmaxx(), my); // Asse X
                 line(mx, 0, mx, getmaxy()); // Asse Y
                 outtextxy(getmaxx()-20, my+10, (char*)"X");
                 outtextxy(mx+10, 10, (char*)"Y");
                 
-                // Disegno della griglia (puntini e tacche sugli assi)
+                // Disegno la griglia e i trattini dei numeri
                 for(int i=-15; i<=15; i++) {
                     setcolor(DARKGRAY);
                     for(int j=-15; j<=15; j++) putpixel(mx + i*scalaX, my + j*scalaY, WHITE); 
@@ -418,7 +421,7 @@ int main() {
                     line(mx-3, my + i*scalaY, mx+3, my + i*scalaY); 
                 }
 
-                // Legenda a schermo
+                // Legenda dei colori in basso a sinistra
                 char leg1[100], leg2[100]; 
                 sprintf(leg1, "P1 (Giallo): %dx^3 + %dx^2 + %dx^1 + %d", p1[3], p1[2], p1[1], p1[0]); 
                 sprintf(leg2, "P2 (Verde) : %dx^3 + %dx^2 + %dx^1 + %d", p2[3], p2[2], p2[1], p2[0]); 
@@ -432,25 +435,25 @@ int main() {
                 setcolor(RED);
                 outtextxy(20, getmaxy()-20, (char*)"Intersezioni (Rosso)");
 
-                // Disegno effettivo delle curve polinomiali
-                // Ciclo su un range di X da -10 a 10 con piccoli passi (0.1) per rendere la curva fluida
+                // Ciclo per calcolare i punti della curva uno per uno
                 for (double i = -10; i <= 10; i += 0.1) 
                 {
+                    // Calcolo il valore Y usando i coefficienti p[i]
                     double v1 = p1[3]*pow(i,3) + p1[2]*pow(i,2) + p1[1]*i + p1[0]; 
                     double v2 = p2[3]*pow(i,3) + p2[2]*pow(i,2) + p2[1]*i + p2[0];
 
-                    // Disegno Polinomio 1 (Cerchietti gialli)
+                    // Disegno il primo polinomio con pallini gialli
                     if (v1 >= -10 && v1 <= 10) {
                         setcolor(YELLOW);
                         circle(mx + i*scalaX, my - v1*scalaY, 4);
                     }
-                    // Disegno Polinomio 2 (Cerchietti verdi)
+                    // Disegno il secondo polinomio con pallini verdi
                     if (v2 >= -10 && v2 <= 10) {
                         setcolor(GREEN);
                         circle(mx + i*scalaX, my - v2*scalaY, 4);
                     }
 
-                    // Se i valori sono molto vicini (differenza < 0.05), segna il punto come sovrapposizione
+                    // Se i due grafici sono molto vicini, cambio colore per far vedere che si toccano
                     if (abs(v1 - v2) < 0.05) { 
                         setcolor(CYAN);
                         circle(mx + i*scalaX, my - v1*scalaY, 5); 
@@ -458,7 +461,7 @@ int main() {
                     }
                 }
 
-                // Disegno intersezioni precise (solo per gradi <= 2) con cerchi rossi
+                // Metto un cerchio rosso nei punti esatti di intersezione calcolati prima
                 if(g1 <= 2 && g2 <= 2) {
                     double a = (double)p1[2] - p2[2];
                     double b = (double)p1[1] - p2[1];
@@ -495,20 +498,21 @@ int main() {
                     }
                 }
 
-                getch(); // Aspetta pressione tasto per uscire dalla grafica
-                closegraph(); // Chiude la finestra grafica e libera la memoria
+                getch(); // Aspetto che l'utente prema un tasto prima di chiudere il disegno
+                closegraph(); // Chiudo la finestra grafica
                 continue; 
             }
         }
         
         // --- RESET SISTEMA (SCELTA 7) ---
+        // Se l'utente preme 7, uso il goto per tornare all'inizio
         else if (scelta == 7) goto inserimento; 
 
         if (scelta != 0) {
             cout << "\n\033[3m  Premi un qualsiasi tasto per tornare al pannello... \033[0m";
             system("pause > nul");
         }
-    } while (scelta != 0); // Il ciclo continua finché l'utente non digita 0
+    } while (scelta != 0); 
 
     // --- MESSAGGI DI CHIUSURA ---
     system("cls");
