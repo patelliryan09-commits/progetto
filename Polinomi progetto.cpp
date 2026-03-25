@@ -146,7 +146,7 @@ int main() {
         system("cls");
         system("color 0B"); 
         cout << "  ================================================" << endl;
-        cout << "  ||                PANNELLO DI CONTROLLO         ||" << endl;
+        cout << "  ||                 PANNELLO DI CONTROLLO        ||" << endl;
         cout << "  ================================================" << endl;
         cout << "  ||                                              ||" << endl;
         cout << "  || [1] ADDIZIONE       (Pol 1 + Pol 2)          ||" << endl;
@@ -253,7 +253,16 @@ int main() {
             cout << "  |  [2] STUDIO POLINOMIO 2                     |" << endl;
             cout << "  |  [3] STUDIO ENTRAMBI                        |" << endl;
             cout << "  |_____________________________________________|" << endl;
-            cout << "\n\033[3m  Inserisci scelta: \033[0m"; cin >> sceltaDelta;
+            cout << "\n\033[3m  Inserisci scelta: \033[0m"; 
+            
+            // AGGIUNTO IL CONTROLLO RICHIESTO QUI:
+            while(!(cin >> sceltaDelta) || sceltaDelta < 1 || sceltaDelta > 3) {
+                cout << "  \033[1;31;3m[!] Attenzione qui hai 3 scelte, inserisci un numero tra quelli elencati!\033[0m" << endl;
+                cout << "\033[3m  Inserisci scelta: \033[0m";
+                cin.clear();
+                cin.ignore(1000, '\n');
+            }
+
             system("cls");
             
             // Faccio lo studio matematico per quello che ha scelto l'utente
